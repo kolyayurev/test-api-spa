@@ -17,6 +17,8 @@ class RequestRepository extends BaseRepository
      */
     public function getByFilters(array $filters = [])
     {
+        // TODO: filters and pagination
+
         return $this->query->get();
     }
 }
