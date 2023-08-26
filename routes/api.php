@@ -14,6 +14,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/requests', 'RequestController@index');
+Route::get('/requests/{id}', 'RequestController@show');
+Route::post('/requests', 'RequestController@store');
+Route::put('/requests/{id}', 'RequestController@update');
+Route::put('/requests/{id}/change-status', 'RequestController@changeStatus');
+Route::delete('/requests/{id}', 'RequestController@destroy');
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
