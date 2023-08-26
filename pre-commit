@@ -1,0 +1,15 @@
+#!/bin/sh
+
+RES=$(composer code:style:test)
+
+if [ $? -ne 0 ]; then
+    echo "$RES"
+    exit 1
+fi
+
+RES=$(composer code:analyse)
+
+if [ $? -ne 0 ]; then
+    echo "$RES"
+    exit 1
+fi
