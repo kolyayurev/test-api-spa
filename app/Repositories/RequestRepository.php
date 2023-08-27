@@ -56,6 +56,13 @@ class RequestRepository extends BaseRepository implements RequestRepositoryContr
             }
         }
 
-        $this->query = $query;
+        $this->query = $query
+            ->when(array_key_exists('limit', $filters), function ($query) use ($filters) {
+                $query->limit(data_get($filters, 'limit'));
+            })
+            ->when(array_key_exists('offset', $filters), function ($query) use ($filters) {
+                $query->offset(data_get($filters, 'offset'));
+            });
+
     }
 }
