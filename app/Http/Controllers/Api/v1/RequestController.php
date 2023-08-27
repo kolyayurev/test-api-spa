@@ -109,7 +109,7 @@ class RequestController extends Controller
      *
      *       @OA\Response(
      *           response=200,
-     *           description="Success",
+     *           description="Success|Validation error",
      *
      *           @OA\JsonContent(
      *
