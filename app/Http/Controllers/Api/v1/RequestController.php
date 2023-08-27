@@ -11,8 +11,18 @@ use App\Services\RequestService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
+/**
+ * @OA\Info(
+ *    title="My Cool API",
+ *    description="An API of cool stuffs",
+ *    version="1.0.0",
+ * )
+ */
 class RequestController extends Controller
 {
+    /**
+     * @param  RequestRepositoryContract<\App\Models\Request>  $repository
+     */
     public function __construct(
         protected RequestRepositoryContract $repository,
         protected RequestService $service,
@@ -27,6 +37,7 @@ class RequestController extends Controller
     public function index(Request $request)
     {
         try {
+
             return response()->json([
                 'status' => 'success',
                 'data' => $this->repository->getByFilters($request->all()),
@@ -62,11 +73,56 @@ class RequestController extends Controller
     /**
      * Store a newly created request
      *
+     * @OA\Post  (
+     *      path="/api/v1/requests",
+     *
+     *      @OA\RequestBody(
+     *
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *
+     *              @OA\Schema(
+     *
+     *                  @OA\Property(
+     *                       type="object",
+     *                       @OA\Property(
+     *                           property="name",
+     *                           type="string"
+     *                       ),
+     *                       @OA\Property(
+     *                           property="email",
+     *                           type="string"
+     *                       ),
+     *                       @OA\Property(
+     *                           property="message",
+     *                           type="string"
+     *                       )
+     *                  ),
+     *                  example={
+     *                      "name":"John",
+     *                      "email":"john@test.com",
+     *                      "message":"Help me!"
+     *                 }
+     *              )
+     *          )
+     *       ),
+     *
+     *       @OA\Response(
+     *           response=200,
+     *           description="Success",
+     *
+     *           @OA\JsonContent(
+     *
+     *               @OA\Property(property="status", type="string", example="success|validation"),
+     *               @OA\Property(property="errors", type="object", example={  }),
+     *           )
+     *       ),
+     *  )
+     *
      * @return JsonResponse
      */
     public function store(StoreRequest $request)
     {
-
         try {
             $this->service->store($request->validated());
 

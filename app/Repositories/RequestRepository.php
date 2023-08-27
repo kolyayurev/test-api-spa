@@ -3,11 +3,13 @@
 namespace App\Repositories;
 
 use App\Models\Request;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * @extends BaseRepository<Request>
+ *
+ * @implements RequestRepositoryContract<Request>
  */
 class RequestRepository extends BaseRepository implements RequestRepositoryContract
 {
@@ -23,11 +25,9 @@ class RequestRepository extends BaseRepository implements RequestRepositoryContr
         'created_at' => 'date', // Y-m-d
     ];
 
-    public function getByFilters(array $filters = []): Collection
+    public function getByFilters(array $filters = []): LengthAwarePaginator
     {
-        $this->applyFilters($filters);
-
-        return $this->query->get();
+        return $this->applyFilters($filters);
     }
 
     public function find(int $id): ?Model
@@ -37,8 +37,9 @@ class RequestRepository extends BaseRepository implements RequestRepositoryContr
 
     /**
      * @param  array<string, string>  $filters
+     * @return LengthAwarePaginator<Request>
      */
-    private function applyFilters(array $filters = []): void
+    private function applyFilters(array $filters = []): LengthAwarePaginator
     {
         $query = $this->query;
 
@@ -56,13 +57,20 @@ class RequestRepository extends BaseRepository implements RequestRepositoryContr
             }
         }
 
-        $this->query = $query
+        $query
             ->when(array_key_exists('limit', $filters), function ($query) use ($filters) {
                 $query->limit(data_get($filters, 'limit'));
             })
             ->when(array_key_exists('offset', $filters), function ($query) use ($filters) {
                 $query->offset(data_get($filters, 'offset'));
             });
+
+        return $query->paginate(
+            data_get($filters, 'perPage', 10),
+            ['*'],
+            'page',
+            data_get($filters, 'page', null),
+        );
 
     }
 }

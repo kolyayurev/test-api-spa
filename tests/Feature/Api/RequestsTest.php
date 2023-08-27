@@ -11,16 +11,18 @@ it('api requests index', function () {
 it('api requests index with filters', function () {
     $request = Request::factory()->create();
 
-    $response = $this->getJson('/api/v1/requests?status='.$request->status.'&created_at='.$request->created_at->format('Y-m-d'));
+    $response = $this->getJson('/api/v1/requests?page=1&status='.$request->status.'&created_at='.$request->created_at->format('Y-m-d'));
 
     $data = [
         'status' => 'success',
         'data' => [
-            [
-                'id' => $request->id,
-                'name' => $request->name,
-                'email' => $request->email,
-                'message' => $request->message,
+            'data' => [
+                [
+                    'id' => $request->id,
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'message' => $request->message,
+                ],
             ],
         ],
     ];
