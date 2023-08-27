@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Repositories\RequestRepository;
+use App\Repositories\RequestRepositoryContract;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -22,6 +24,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        $this->app->bind(RequestRepositoryContract::class, RequestRepository::class);
     }
 }

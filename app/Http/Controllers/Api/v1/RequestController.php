@@ -5,15 +5,15 @@ namespace App\Http\Controllers\Api\v1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RequestRequest;
 use App\Http\Requests\RequestStatusRequest;
-use App\Models\Request;
-use App\Repositories\RequestRepository;
+use App\Repositories\RequestRepositoryContract;
 use App\Services\RequestService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class RequestController extends Controller
 {
     public function __construct(
-        protected RequestRepository $repository,
+        protected RequestRepositoryContract $repository,
         protected RequestService $service,
     ) {
     }
@@ -23,12 +23,12 @@ class RequestController extends Controller
      *
      * @return JsonResponse
      */
-    public function index()
+    public function index(Request $request)
     {
         try {
             return response()->json([
                 'status' => 'success',
-                'data' => $this->repository->getByFilters(),
+                'data' => $this->repository->getByFilters($request->all()),
             ]);
         } catch (\Throwable $e) {
             return response()->json([
