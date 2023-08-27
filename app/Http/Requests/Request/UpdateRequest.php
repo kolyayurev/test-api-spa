@@ -1,11 +1,14 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Request;
 
 /*
  * Да, тавтология :)
  */
-class RequestRequest extends BaseRequest
+
+use App\Http\Requests\BaseRequest;
+
+class UpdateRequest extends BaseRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -15,9 +18,9 @@ class RequestRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            'name' => ['string', 'max:255', 'required'],
-            'email' => ['email', 'max:255', 'required'],
-            'message' => ['string', 'max:1024', 'required'],
+            'name' => ['string', 'max:255', 'nullable'],
+            'email' => ['email', 'max:255', 'nullable'],
+            'message' => ['string', 'max:1024', 'nullable'],
         ];
     }
 }

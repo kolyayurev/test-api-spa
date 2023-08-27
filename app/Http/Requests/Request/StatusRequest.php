@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Request;
 
 use App\Enums\Status;
+use App\Http\Requests\BaseRequest;
 use Illuminate\Validation\Rule;
 
-class RequestStatusRequest extends BaseRequest
+class StatusRequest extends BaseRequest
 {
     /**
      * Get the validation rules that apply to the request.

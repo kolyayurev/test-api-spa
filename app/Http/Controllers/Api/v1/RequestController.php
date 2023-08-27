@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\RequestRequest;
-use App\Http\Requests\RequestStatusRequest;
+use App\Http\Requests\Request\StatusRequest;
+use App\Http\Requests\Request\StoreRequest;
+use App\Http\Requests\Request\UpdateRequest;
 use App\Repositories\RequestRepositoryContract;
 use App\Services\RequestService;
 use Illuminate\Http\JsonResponse;
@@ -63,7 +64,7 @@ class RequestController extends Controller
      *
      * @return JsonResponse
      */
-    public function store(RequestRequest $request)
+    public function store(StoreRequest $request)
     {
 
         try {
@@ -84,7 +85,7 @@ class RequestController extends Controller
      *
      * @return JsonResponse
      */
-    public function update(RequestRequest $request, int $id)
+    public function update(UpdateRequest $request, int $id)
     {
         try {
             $this->service->update($id, $request->validated());
@@ -103,7 +104,7 @@ class RequestController extends Controller
      *
      * @return JsonResponse
      */
-    public function changeStatus(RequestStatusRequest $request, int $id)
+    public function changeStatus(StatusRequest $request, int $id)
     {
         try {
             $this->service->changeStatus($id, $request->get('status'), $request->get('comment'));

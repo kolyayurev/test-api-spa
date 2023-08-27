@@ -7,6 +7,7 @@ use App\StateMachines\StatusStateMachine;
 use Asantibanez\LaravelEloquentStateMachines\Traits\HasStateMachines;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Models\Landing
@@ -16,6 +17,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $email
  * @property Status $status
  * @property string $message
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
  *
  * @method \Asantibanez\LaravelEloquentStateMachines\StateMachines\State status()
  */
