@@ -1,9 +1,6 @@
 <?php
 
 use App\Models\Request;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-
-uses(RefreshDatabase::class);
 
 it('api requests index', function () {
     $response = $this->get('/api/v1/requests');
